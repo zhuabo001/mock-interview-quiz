@@ -1,0 +1,37 @@
+[     204ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:5173/node_modules/.vite/deps/client-CRGSV5G_.js?v=5136750c:14337
+[     249ms] [LOG] %cDocumentation: %chttps://mswjs.io/docs font-weight:bold font-weight:normal @ http://localhost:5173/node_modules/.vite/deps/msw_browser.js?v=e06a5d1f:3307
+[     249ms] [LOG] Found an issue? https://github.com/mswjs/msw/issues @ http://localhost:5173/node_modules/.vite/deps/msw_browser.js?v=e06a5d1f:3308
+[     249ms] [LOG] Worker script URL: http://localhost:5173/mockServiceWorker.js @ http://localhost:5173/node_modules/.vite/deps/msw_browser.js?v=e06a5d1f:3309
+[     249ms] [LOG] Worker scope: http://localhost:5173/ @ http://localhost:5173/node_modules/.vite/deps/msw_browser.js?v=e06a5d1f:3310
+[     249ms] [LOG] Client ID: %s (%s) adbb0f4e-fbbe-4466-8763-b876a29351bc top-level @ http://localhost:5173/node_modules/.vite/deps/msw_browser.js?v=e06a5d1f:3311
+[     368ms] [LOG] Request {url: URL, method: GET, headers: Object, body: } @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=16235c61:416
+[     369ms] [LOG] Handler: HttpHandler @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=16235c61:417
+[     369ms] [LOG] Response {status: 200, statusText: OK, headers: Object, body: {"code":0,"message":"success","data":{"totalFunds"…eFunds":9,"totalClients":10,"totalAum":52000000}}} @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=16235c61:418
+[     369ms] [LOG] Request {url: URL, method: GET, headers: Object, body: } @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=16235c61:416
+[     369ms] [LOG] Handler: HttpHandler @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=16235c61:417
+[     369ms] [LOG] Response {status: 200, statusText: OK, headers: Object, body: {"code":0,"message":"success","data":[{"type":"货币型…cale":2850000000,"count":1,"percentage":0.0643}]}} @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=16235c61:418
+[     370ms] [LOG] Request {url: URL, method: GET, headers: Object, body: } @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=16235c61:416
+[     370ms] [LOG] Handler: HttpHandler @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=16235c61:417
+[     370ms] [LOG] Response {status: 200, statusText: OK, headers: Object, body: {"code":0,"message":"success","data":[{"month":"20…ount":0,"byType":{"电话":0,"面谈":0,"微信":0,"邮件":0}}]}} @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=16235c61:418
+[     465ms] ExpressionError: Unexpected character: }
+    at http://localhost:5173/node_modules/.vite/deps/@ant-design_charts.js?v=131daa05:131026:24
+    at A$1 (http://localhost:5173/node_modules/.vite/deps/@ant-design_charts.js?v=131daa05:131034:4)
+    at http://localhost:5173/node_modules/.vite/deps/@ant-design_charts.js?v=131daa05:131054:20
+    at http://localhost:5173/node_modules/.vite/deps/@ant-design_charts.js?v=131daa05:122980:7
+    at parseOptionsExpr (http://localhost:5173/node_modules/.vite/deps/@ant-design_charts.js?v=131daa05:131076:64)
+    at http://localhost:5173/node_modules/.vite/deps/@ant-design_charts.js?v=131daa05:131071:27
+    at http://localhost:5173/node_modules/.vite/deps/@ant-design_charts.js?v=131daa05:3673:12
+    at Array.forEach (<anonymous>)
+    at map_values_default (http://localhost:5173/node_modules/.vite/deps/@ant-design_charts.js?v=131daa05:3672:75)
+    at parseOptionsExpr (http://localhost:5173/node_modules/.vite/deps/@ant-design_charts.js?v=131daa05:131069:53)
+[     465ms] ExpressionError: Unexpected character: }
+    at http://localhost:5173/node_modules/.vite/deps/@ant-design_charts.js?v=131daa05:131026:24
+    at A$1 (http://localhost:5173/node_modules/.vite/deps/@ant-design_charts.js?v=131daa05:131034:4)
+    at http://localhost:5173/node_modules/.vite/deps/@ant-design_charts.js?v=131daa05:131054:20
+    at http://localhost:5173/node_modules/.vite/deps/@ant-design_charts.js?v=131daa05:122980:7
+    at parseOptionsExpr (http://localhost:5173/node_modules/.vite/deps/@ant-design_charts.js?v=131daa05:131076:64)
+    at http://localhost:5173/node_modules/.vite/deps/@ant-design_charts.js?v=131daa05:131071:27
+    at http://localhost:5173/node_modules/.vite/deps/@ant-design_charts.js?v=131daa05:3673:12
+    at Array.forEach (<anonymous>)
+    at map_values_default (http://localhost:5173/node_modules/.vite/deps/@ant-design_charts.js?v=131daa05:3672:75)
+    at parseOptionsExpr (http://localhost:5173/node_modules/.vite/deps/@ant-design_charts.js?v=131daa05:131069:53)
