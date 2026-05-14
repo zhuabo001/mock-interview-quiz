@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>基金销售管理工具 — 产品货架</title>
+<style>
+  :root {
+    --surface-0: oklch(0.985 0.006 80);
+    --surface-1: oklch(0.97 0.005 80);
+    --surface-2: oklch(0.955 0.004 80);
+    --sidebar-bg: oklch(0.965 0.007 80);
+    --text-primary: oklch(0.22 0.008 80);
+    --text-secondary: oklch(0.45 0.006 80);
+    --text-tertiary: oklch(0.6 0.005 80);
+    --border: oklch(0.9 0.005 80);
+    --accent: oklch(0.52 0.08 240);
+    --accent-light: oklch(0.94 0.025 240);
+    --positive: oklch(0.45 0.12 155);
+    --negative: oklch(0.5 0.12 25);
+    --radius-sm: 4px;
+    --radius-md: 6px;
+    --shadow-sm: 0 1px 2px oklch(0.2 0.005 80 / 0.06);
+    --font: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font);
+    background: var(--surface-0);
+    color: var(--text-primary);
+    font-size: 14px;
+    line-height: 1.5;
+    min-width: 1280px;
+  }
+
+  .layout { display: flex; min-height: 100vh; }
+
+  /* Sidebar (same as dashboard) */
+  .sidebar {
+    width: 200px;
+    background: var(--sidebar-bg);
+    border-right: 1px solid var(--border);
+    padding: 20px 0;
+    flex-shrink: 0;
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .sidebar-brand { padding: 0 20px 24px; font-size: 15px; font-weight: 600; color: var(--text-primary); letter-spacing: -0.01em; }
+  .sidebar-nav { list-style: none; flex: 1; }
+  .sidebar-nav li a { display: flex; align-items: center; gap: 10px; padding: 10px 20px; color: var(--text-secondary); text-decoration: none; font-size: 14px; transition: background 0.15s ease-out, color 0.15s ease-out; }
+  .sidebar-nav li a:hover { background: var(--surface-2); color: var(--text-primary); }
+  .sidebar-nav li a.active { background: var(--accent-light); color: var(--accent); font-weight: 500; }
+  .sidebar-nav li a svg { width: 18px; height: 18px; opacity: 0.7; }
+  .sidebar-nav li a.active svg { opacity: 1; }
+
+  /* Main */
+  .main { margin-left: 200px; flex: 1; padding: 32px; }
+  .page-header { margin-bottom: 24px; }
+  .page-header h1 { font-size: 20px; font-weight: 600; letter-spacing: -0.02em; }
+
+  /* Toolbar */
+  .toolbar {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    align-items: center;
+  }
+
+  .search-input {
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    width: 240px;
+    outline: none;
+    background: white;
+    color: var(--text-primary);
+    transition: border-color 0.15s ease-out;
+  }
+  .search-input:focus { border-color: var(--accent); }
+  .search-input::placeholder { color: var(--text-tertiary); }
+
+  .filter-select {
+    padding: 8px 32px 8px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    background: white url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M3 5l3 3 3-3' fill='none' stroke='%23888' stroke-width='1.5'/%3E%3C/svg%3E") no-repeat right 10px center;
+    appearance: none;
+    color: var(--text-primary);
+    cursor: pointer;
+    outline: none;
+  }
+  .filter-select:focus { border-color: var(--accent); }
+
+  /* Table */
+  .data-table {
+    width: 100%;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    border-spacing: 0;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .data-table th {
+    text-align: left;
+    padding: 12px 16px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    background: var(--surface-1);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .data-table td {
+    padding: 14px 16px;
+    font-size: 13px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-secondary);
+  }
+
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: oklch(0.99 0.003 80); }
+
+  .data-table .col-name {
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+
+  .data-table .col-nav {
+    font-variant-numeric: tabular-nums;
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+
+  .data-table .col-scale {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Tags / badges */
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+
+  .badge-active { background: oklch(0.93 0.04 155); color: oklch(0.35 0.1 155); }
+  .badge-raising { background: oklch(0.93 0.04 240); color: oklch(0.4 0.08 240); }
+  .badge-closed { background: oklch(0.93 0.01 80); color: var(--text-tertiary); }
+
+  .type-tag {
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+
+  /* Action link */
+  .action-link {
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 13px;
+    cursor: pointer;
+  }
+  .action-link:hover { text-decoration: underline; }
+
+  /* Pagination */
+  .pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 16px;
+    font-size: 13px;
+    color: var(--text-tertiary);
+  }
+
+  .pagination-info { }
+
+  .pagination-controls {
+    display: flex;
+    gap: 4px;
+  }
+
+  .pagination-btn {
+    padding: 6px 10px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: white;
+    font-size: 12px;
+    color: var(--text-secondary);
+    cursor: pointer;
+  }
+  .pagination-btn:hover { background: var(--surface-1); }
+  .pagination-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-brand">基金销售管理</div>
+    <ul class="sidebar-nav">
+      <li><a href="dashboard.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>数据概览</a></li>
+      <li><a href="#" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M4 12h16M4 17h10"/></svg>产品货架</a></li>
+      <li><a href="clients-list.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>客户管理</a></li>
+    </ul>
+  </aside>
+
+  <main class="main">
+    <div class="page-header">
+      <h1>产品货架</h1>
+    </div>
+
+    <div class="toolbar">
+      <input type="text" class="search-input" placeholder="搜索产品名称...">
+      <select class="filter-select">
+        <option>全部类型</option>
+        <option>股票型</option>
+        <option>债券型</option>
+        <option>混合型</option>
+        <option>货币型</option>
+        <option>指数型</option>
+      </select>
+      <select class="filter-select">
+        <option>全部状态</option>
+        <option>募集中</option>
+        <option>运作中</option>
+        <option>已清盘</option>
+      </select>
+    </div>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>产品名称</th>
+          <th>类型</th>
+          <th>最新净值</th>
+          <th>当前规模</th>
+          <th>状态</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="col-name">华夏稳健增长混合型基金</td>
+          <td class="type-tag">混合型</td>
+          <td class="col-nav">1.4823</td>
+          <td class="col-scale">28.50 亿</td>
+          <td><span class="badge badge-active">运作中</span></td>
+          <td><a class="action-link" href="fund-detail.html">查看</a></td>
+        </tr>
+        <tr>
+          <td class="col-name">南方价值精选股票型基金</td>
+          <td class="type-tag">股票型</td>
+          <td class="col-nav">2.1560</td>
+          <td class="col-scale">49.20 亿</td>
+          <td><span class="badge badge-active">运作中</span></td>
+          <td><a class="action-link">查看</a></td>
+        </tr>
+        <tr>
+          <td class="col-name">易方达纯债增强债券型基金</td>
+          <td class="type-tag">债券型</td>
+          <td class="col-nav">1.1245</td>
+          <td class="col-scale">92.00 亿</td>
+          <td><span class="badge badge-active">运作中</span></td>
+          <td><a class="action-link">查看</a></td>
+        </tr>
+        <tr>
+          <td class="col-name">广发科技创新股票型基金</td>
+          <td class="type-tag">股票型</td>
+          <td class="col-nav">1.8930</td>
+          <td class="col-scale">37.80 亿</td>
+          <td><span class="badge badge-active">运作中</span></td>
+          <td><a class="action-link">查看</a></td>
+        </tr>
+        <tr>
+          <td class="col-name">博时现金宝货币型基金</td>
+          <td class="type-tag">货币型</td>
+          <td class="col-nav">1.0000</td>
+          <td class="col-scale">135.00 亿</td>
+          <td><span class="badge badge-active">运作中</span></td>
+          <td><a class="action-link">查看</a></td>
+        </tr>
+        <tr>
+          <td class="col-name">富国新兴消费混合型基金</td>
+          <td class="type-tag">混合型</td>
+          <td class="col-nav">1.0000</td>
+          <td class="col-scale">—</td>
+          <td><span class="badge badge-raising">募集中</span></td>
+          <td><a class="action-link">查看</a></td>
+        </tr>
+        <tr>
+          <td class="col-name">景顺长城量化对冲混合型基金</td>
+          <td class="type-tag">混合型</td>
+          <td class="col-nav">0.8760</td>
+          <td class="col-scale">—</td>
+          <td><span class="badge badge-closed">已清盘</span></td>
+          <td><a class="action-link">查看</a></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="pagination">
+      <span class="pagination-info">共 10 条，第 1/1 页</span>
+      <div class="pagination-controls">
+        <button class="pagination-btn active">1</button>
+      </div>
+    </div>
+  </main>
+</div>
+</body>
+</html>

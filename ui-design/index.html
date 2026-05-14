@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>基金销售管理工具</title>
+<style>
+  :root {
+    --surface-0: oklch(0.985 0.006 80);
+    --surface-1: oklch(0.97 0.005 80);
+    --surface-2: oklch(0.955 0.004 80);
+    --text-primary: oklch(0.22 0.008 80);
+    --text-secondary: oklch(0.45 0.006 80);
+    --text-tertiary: oklch(0.6 0.005 80);
+    --border: oklch(0.9 0.005 80);
+    --accent: oklch(0.52 0.08 240);
+    --accent-light: oklch(0.94 0.025 240);
+    --radius-sm: 4px;
+    --radius-md: 6px;
+    --shadow-sm: 0 1px 2px oklch(0.2 0.005 80 / 0.06);
+    --font: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font);
+    background: var(--surface-0);
+    color: var(--text-primary);
+    font-size: 14px;
+    line-height: 1.5;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 64px 32px;
+  }
+
+  .home {
+    width: 100%;
+    max-width: 640px;
+  }
+
+  .home-header {
+    margin-bottom: 48px;
+  }
+
+  .home-title {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+  }
+
+  .home-desc {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    max-width: 520px;
+  }
+
+  .home-nav {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .home-nav-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 20px 24px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.15s ease-out, box-shadow 0.15s ease-out;
+  }
+
+  .home-nav-item:hover {
+    border-color: oklch(0.82 0.02 240);
+    box-shadow: 0 2px 8px oklch(0.2 0.005 80 / 0.08);
+  }
+
+  .home-nav-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-sm);
+    background: var(--accent-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--accent);
+  }
+
+  .home-nav-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .home-nav-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .home-nav-title {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+
+  .home-nav-sub {
+    font-size: 13px;
+    color: var(--text-tertiary);
+    line-height: 1.5;
+  }
+
+  .home-nav-arrow {
+    color: var(--text-tertiary);
+    margin-top: 2px;
+    flex-shrink: 0;
+    opacity: 0;
+    transform: translateX(-4px);
+    transition: opacity 0.15s ease-out, transform 0.15s ease-out;
+  }
+
+  .home-nav-item:hover .home-nav-arrow {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .home-footer {
+    margin-top: 48px;
+    font-size: 12px;
+    color: var(--text-tertiary);
+  }
+</style>
+</head>
+<body>
+<div class="home">
+  <header class="home-header">
+    <h1 class="home-title">基金销售管理工具</h1>
+    <p class="home-desc">为渠道销售团队打造的内部工具。集中管理基金产品信息、客户关系和跟进记录，快速查询持仓关联，通过数据概览把握业务全貌。</p>
+  </header>
+
+  <nav>
+    <ul class="home-nav">
+      <li>
+        <a class="home-nav-item" href="dashboard.html">
+          <div class="home-nav-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          </div>
+          <div class="home-nav-content">
+            <div class="home-nav-title">数据概览</div>
+            <div class="home-nav-sub">产品规模分布、跟进趋势、核心业务指标一览</div>
+          </div>
+          <span class="home-nav-arrow">→</span>
+        </a>
+      </li>
+      <li>
+        <a class="home-nav-item" href="funds-list.html">
+          <div class="home-nav-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
+          </div>
+          <div class="home-nav-content">
+            <div class="home-nav-title">产品货架</div>
+            <div class="home-nav-sub">查阅在售基金产品，按类型、状态筛选，查看产品详情及持有人</div>
+          </div>
+          <span class="home-nav-arrow">→</span>
+        </a>
+      </li>
+      <li>
+        <a class="home-nav-item" href="clients-list.html">
+          <div class="home-nav-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>
+          </div>
+          <div class="home-nav-content">
+            <div class="home-nav-title">客户管理</div>
+            <div class="home-nav-sub">维护客户信息，查看持仓关联，记录跟进动态</div>
+          </div>
+          <span class="home-nav-arrow">→</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <footer class="home-footer">
+    内部系统，仅限授权人员使用
+  </footer>
+</div>
+</body>
+</html>

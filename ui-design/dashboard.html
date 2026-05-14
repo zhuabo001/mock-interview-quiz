@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>基金销售管理工具 — Dashboard</title>
+<style>
+  :root {
+    --surface-0: oklch(0.985 0.006 80);
+    --surface-1: oklch(0.97 0.005 80);
+    --surface-2: oklch(0.955 0.004 80);
+    --sidebar-bg: oklch(0.965 0.007 80);
+    --text-primary: oklch(0.22 0.008 80);
+    --text-secondary: oklch(0.45 0.006 80);
+    --text-tertiary: oklch(0.6 0.005 80);
+    --border: oklch(0.9 0.005 80);
+    --accent: oklch(0.52 0.08 240);
+    --accent-light: oklch(0.94 0.025 240);
+    --positive: oklch(0.55 0.12 155);
+    --negative: oklch(0.55 0.12 25);
+    --radius-sm: 4px;
+    --radius-md: 6px;
+    --shadow-sm: 0 1px 2px oklch(0.2 0.005 80 / 0.06);
+    --shadow-md: 0 2px 8px oklch(0.2 0.005 80 / 0.08);
+    --font: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font);
+    background: var(--surface-0);
+    color: var(--text-primary);
+    font-size: 14px;
+    line-height: 1.5;
+    min-width: 1280px;
+  }
+
+  .layout {
+    display: flex;
+    min-height: 100vh;
+  }
+
+  /* Sidebar */
+  .sidebar {
+    width: 200px;
+    background: var(--sidebar-bg);
+    border-right: 1px solid var(--border);
+    padding: 20px 0;
+    flex-shrink: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sidebar-brand {
+    padding: 0 20px 24px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
+  }
+
+  .sidebar-nav {
+    list-style: none;
+    flex: 1;
+  }
+
+  .sidebar-nav li a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 14px;
+    transition: background 0.15s ease-out, color 0.15s ease-out;
+  }
+
+  .sidebar-nav li a:hover {
+    background: var(--surface-2);
+    color: var(--text-primary);
+  }
+
+  .sidebar-nav li a.active {
+    background: var(--accent-light);
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .sidebar-nav li a svg {
+    width: 18px;
+    height: 18px;
+    opacity: 0.7;
+  }
+
+  .sidebar-nav li a.active svg {
+    opacity: 1;
+  }
+
+  /* Main content */
+  .main {
+    margin-left: 200px;
+    flex: 1;
+    padding: 32px;
+  }
+
+  .page-header {
+    margin-bottom: 28px;
+  }
+
+  .page-header h1 {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+  }
+
+  .page-header p {
+    font-size: 13px;
+    color: var(--text-tertiary);
+    margin-top: 4px;
+  }
+
+  /* Stat cards */
+  .stat-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+
+  .stat-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .stat-card-label {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 8px;
+  }
+
+  .stat-card-value {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+  }
+
+  .stat-card-sub {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+  }
+
+  /* Charts area */
+  .charts-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .chart-panel {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .chart-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .chart-panel-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+
+  .chart-panel-subtitle {
+    font-size: 12px;
+    color: var(--text-tertiary);
+  }
+
+  /* Pie chart placeholder */
+  .pie-chart {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    padding: 16px 0;
+  }
+
+  .pie-visual {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    background: conic-gradient(
+      oklch(0.6 0.08 240) 0% 25%,
+      oklch(0.65 0.06 200) 25% 45%,
+      oklch(0.7 0.05 160) 45% 62%,
+      oklch(0.75 0.04 120) 62% 78%,
+      oklch(0.8 0.03 80) 78% 100%
+    );
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .pie-visual::after {
+    content: '';
+    position: absolute;
+    inset: 40px;
+    background: white;
+    border-radius: 50%;
+  }
+
+  .pie-legend {
+    list-style: none;
+    font-size: 13px;
+  }
+
+  .pie-legend li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 0;
+    color: var(--text-secondary);
+  }
+
+  .pie-legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .pie-legend-value {
+    margin-left: auto;
+    font-weight: 500;
+    color: var(--text-primary);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Line chart placeholder */
+  .line-chart {
+    height: 200px;
+    position: relative;
+    padding: 16px 0;
+  }
+
+  .line-chart-svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .line-chart-axis {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 8px;
+    font-size: 11px;
+    color: var(--text-tertiary);
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">基金销售管理</div>
+    <ul class="sidebar-nav">
+      <li>
+        <a href="#" class="active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          数据概览
+        </a>
+      </li>
+      <li>
+        <a href="funds-list.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
+          产品货架
+        </a>
+      </li>
+      <li>
+        <a href="clients-list.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>
+          客户管理
+        </a>
+      </li>
+    </ul>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+    <div class="page-header">
+      <h1>数据概览</h1>
+      <p>业务全貌一览，数据截至 2025-03-14</p>
+    </div>
+
+    <!-- Stat Cards -->
+    <section class="stat-cards">
+      <div class="stat-card">
+        <div class="stat-card-label">产品总数</div>
+        <div class="stat-card-value">10</div>
+        <div class="stat-card-sub">覆盖 5 种类型</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-label">在售产品</div>
+        <div class="stat-card-value">8</div>
+        <div class="stat-card-sub">运作中 7 / 募集中 1</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-label">客户总数</div>
+        <div class="stat-card-value">10</div>
+        <div class="stat-card-sub">钻石 2 / 金 3 / 银 2</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-label">管理总规模</div>
+        <div class="stat-card-value">478.00 亿</div>
+        <div class="stat-card-sub">在管客户资产合计</div>
+      </div>
+    </section>
+
+    <!-- Charts -->
+    <section class="charts-grid">
+      <!-- Pie Chart -->
+      <div class="chart-panel">
+        <div class="chart-panel-header">
+          <div>
+            <div class="chart-panel-title">在售产品规模占比</div>
+            <div class="chart-panel-subtitle">按产品类型分组，仅统计运作中产品</div>
+          </div>
+        </div>
+        <div class="pie-chart">
+          <div class="pie-visual"></div>
+          <ul class="pie-legend">
+            <li>
+              <span class="pie-legend-dot" style="background: oklch(0.6 0.08 240)"></span>
+              货币型
+              <span class="pie-legend-value">38.1%</span>
+            </li>
+            <li>
+              <span class="pie-legend-dot" style="background: oklch(0.65 0.06 200)"></span>
+              债券型
+              <span class="pie-legend-value">24.6%</span>
+            </li>
+            <li>
+              <span class="pie-legend-dot" style="background: oklch(0.7 0.05 160)"></span>
+              股票型
+              <span class="pie-legend-value">16.9%</span>
+            </li>
+            <li>
+              <span class="pie-legend-dot" style="background: oklch(0.75 0.04 120)"></span>
+              指数型
+              <span class="pie-legend-value">13.8%</span>
+            </li>
+            <li>
+              <span class="pie-legend-dot" style="background: oklch(0.8 0.03 80)"></span>
+              混合型
+              <span class="pie-legend-value">6.6%</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Line Chart -->
+      <div class="chart-panel">
+        <div class="chart-panel-header">
+          <div>
+            <div class="chart-panel-title">跟进趋势</div>
+            <div class="chart-panel-subtitle">近 6 个月跟进次数，按方式细分</div>
+          </div>
+        </div>
+        <div class="line-chart">
+          <svg class="line-chart-svg" viewBox="0 0 480 180" preserveAspectRatio="none">
+            <!-- Grid lines -->
+            <line x1="0" y1="45" x2="480" y2="45" stroke="oklch(0.92 0.003 80)" stroke-width="1"/>
+            <line x1="0" y1="90" x2="480" y2="90" stroke="oklch(0.92 0.003 80)" stroke-width="1"/>
+            <line x1="0" y1="135" x2="480" y2="135" stroke="oklch(0.92 0.003 80)" stroke-width="1"/>
+            <!-- Total line -->
+            <polyline points="40,120 136,90 232,100 328,72 424,85 480,95" fill="none" stroke="oklch(0.52 0.08 240)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <!-- Phone line -->
+            <polyline points="40,140 136,125 232,130 328,115 424,125 480,130" fill="none" stroke="oklch(0.6 0.06 200)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4 3"/>
+            <!-- Meeting line -->
+            <polyline points="40,155 136,145 232,150 328,140 424,148 480,150" fill="none" stroke="oklch(0.65 0.05 160)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4 3"/>
+            <!-- Dots on total -->
+            <circle cx="40" cy="120" r="3" fill="oklch(0.52 0.08 240)"/>
+            <circle cx="136" cy="90" r="3" fill="oklch(0.52 0.08 240)"/>
+            <circle cx="232" cy="100" r="3" fill="oklch(0.52 0.08 240)"/>
+            <circle cx="328" cy="72" r="3" fill="oklch(0.52 0.08 240)"/>
+            <circle cx="424" cy="85" r="3" fill="oklch(0.52 0.08 240)"/>
+            <circle cx="480" cy="95" r="3" fill="oklch(0.52 0.08 240)"/>
+          </svg>
+          <div class="line-chart-axis">
+            <span>2024-10</span>
+            <span>2024-11</span>
+            <span>2024-12</span>
+            <span>2025-01</span>
+            <span>2025-02</span>
+            <span>2025-03</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+</body>
+</html>
