@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>基金销售管理工具 — 客户管理</title>
+<style>
+  :root {
+    --surface-0: oklch(0.985 0.006 80);
+    --surface-1: oklch(0.97 0.005 80);
+    --surface-2: oklch(0.955 0.004 80);
+    --sidebar-bg: oklch(0.965 0.007 80);
+    --text-primary: oklch(0.22 0.008 80);
+    --text-secondary: oklch(0.45 0.006 80);
+    --text-tertiary: oklch(0.6 0.005 80);
+    --border: oklch(0.9 0.005 80);
+    --accent: oklch(0.52 0.08 240);
+    --accent-light: oklch(0.94 0.025 240);
+    --positive: oklch(0.45 0.12 155);
+    --negative: oklch(0.5 0.12 25);
+    --radius-sm: 4px;
+    --radius-md: 6px;
+    --shadow-sm: 0 1px 2px oklch(0.2 0.005 80 / 0.06);
+    --shadow-lg: 0 8px 32px oklch(0.2 0.005 80 / 0.12);
+    --font: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: var(--font); background: var(--surface-0); color: var(--text-primary); font-size: 14px; line-height: 1.5; min-width: 1280px; }
+  .layout { display: flex; min-height: 100vh; }
+
+  .sidebar { width: 200px; background: var(--sidebar-bg); border-right: 1px solid var(--border); padding: 20px 0; flex-shrink: 0; position: fixed; top: 0; left: 0; bottom: 0; display: flex; flex-direction: column; }
+  .sidebar-brand { padding: 0 20px 24px; font-size: 15px; font-weight: 600; }
+  .sidebar-nav { list-style: none; }
+  .sidebar-nav li a { display: flex; align-items: center; gap: 10px; padding: 10px 20px; color: var(--text-secondary); text-decoration: none; font-size: 14px; }
+  .sidebar-nav li a.active { background: var(--accent-light); color: var(--accent); font-weight: 500; }
+  .sidebar-nav li a svg { width: 18px; height: 18px; opacity: 0.7; }
+
+  .main { margin-left: 200px; flex: 1; padding: 32px; }
+  .page-header { margin-bottom: 24px; }
+  .page-header h1 { font-size: 20px; font-weight: 600; letter-spacing: -0.02em; }
+
+  .toolbar { display: flex; gap: 12px; margin-bottom: 20px; }
+  .search-input { padding: 8px 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 13px; width: 240px; outline: none; background: white; color: var(--text-primary); }
+  .search-input:focus { border-color: var(--accent); }
+  .search-input::placeholder { color: var(--text-tertiary); }
+  .filter-select { padding: 8px 32px 8px 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 13px; background: white url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M3 5l3 3 3-3' fill='none' stroke='%23888' stroke-width='1.5'/%3E%3C/svg%3E") no-repeat right 10px center; appearance: none; color: var(--text-primary); cursor: pointer; outline: none; }
+  .filter-select:focus { border-color: var(--accent); }
+
+  .data-table { width: 100%; background: white; border: 1px solid var(--border); border-radius: var(--radius-md); border-spacing: 0; overflow: hidden; box-shadow: var(--shadow-sm); }
+  .data-table th { text-align: left; padding: 12px 16px; font-size: 12px; font-weight: 500; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.04em; background: var(--surface-1); border-bottom: 1px solid var(--border); }
+  .data-table td { padding: 14px 16px; font-size: 13px; border-bottom: 1px solid var(--border); color: var(--text-secondary); }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: oklch(0.99 0.003 80); }
+  .data-table .col-name { font-weight: 500; color: var(--text-primary); }
+
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: 11px; font-weight: 500; }
+  .badge-diamond { background: oklch(0.93 0.03 280); color: oklch(0.4 0.08 280); }
+  .badge-gold { background: oklch(0.93 0.04 80); color: oklch(0.4 0.08 60); }
+  .badge-silver { background: oklch(0.93 0.01 80); color: var(--text-secondary); }
+  .badge-bronze { background: oklch(0.93 0.02 50); color: oklch(0.45 0.06 50); }
+  .badge-prospect { background: var(--surface-2); color: var(--text-tertiary); }
+
+  .action-link { color: var(--accent); text-decoration: none; font-size: 13px; cursor: pointer; }
+  .action-link:hover { text-decoration: underline; }
+
+  .pagination { display: flex; align-items: center; justify-content: space-between; margin-top: 16px; font-size: 13px; color: var(--text-tertiary); }
+  .pagination-controls { display: flex; gap: 4px; }
+  .pagination-btn { padding: 6px 10px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: white; font-size: 12px; color: var(--text-secondary); cursor: pointer; }
+  .pagination-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+
+  /* Drawer */
+  .drawer-overlay { position: fixed; inset: 0; left: 200px; background: oklch(0.2 0.005 80 / 0.3); z-index: 100; }
+  .drawer { position: fixed; top: 0; right: 0; bottom: 0; width: 560px; background: white; box-shadow: var(--shadow-lg); z-index: 101; overflow-y: auto; padding: 32px; }
+  .drawer-close { position: absolute; top: 20px; right: 20px; width: 28px; height: 28px; border: none; background: var(--surface-1); border-radius: var(--radius-sm); cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text-secondary); }
+  .drawer-title { font-size: 18px; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 4px; padding-right: 40px; }
+  .drawer-badges { display: flex; gap: 8px; margin-bottom: 24px; }
+
+  .info-section { margin-bottom: 28px; }
+  .info-section-title { font-size: 12px; font-weight: 500; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 24px; }
+  .info-item-label { font-size: 12px; color: var(--text-tertiary); margin-bottom: 2px; }
+  .info-item-value { font-size: 14px; font-weight: 500; color: var(--text-primary); }
+
+  .tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
+  .tag { padding: 2px 8px; background: var(--surface-2); border-radius: 3px; font-size: 11px; color: var(--text-secondary); }
+
+  /* Holdings mini table */
+  .mini-table { width: 100%; border-spacing: 0; font-size: 13px; }
+  .mini-table th { text-align: left; padding: 8px 10px; font-size: 11px; font-weight: 500; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 1px solid var(--border); }
+  .mini-table td { padding: 10px; border-bottom: 1px solid oklch(0.95 0.003 80); color: var(--text-secondary); }
+  .mini-table tr:last-child td { border-bottom: none; }
+  .fund-link { color: var(--accent); cursor: pointer; font-weight: 500; }
+  .fund-link:hover { text-decoration: underline; }
+  .return-positive { color: var(--positive); font-weight: 500; }
+  .return-negative { color: var(--negative); font-weight: 500; }
+
+  /* Follow-up timeline */
+  .followup-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+  .btn-primary { padding: 7px 14px; background: var(--accent); color: white; border: none; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; cursor: pointer; }
+  .btn-primary:hover { background: oklch(0.48 0.08 240); }
+
+  .timeline { list-style: none; }
+  .timeline-item { position: relative; padding-left: 20px; padding-bottom: 20px; }
+  .timeline-item::before { content: ''; position: absolute; left: 4px; top: 8px; bottom: 0; width: 1px; background: var(--border); }
+  .timeline-item:last-child::before { display: none; }
+  .timeline-item::after { content: ''; position: absolute; left: 0; top: 6px; width: 9px; height: 9px; border-radius: 50%; background: var(--surface-2); border: 2px solid var(--border); }
+  .timeline-item:first-child::after { background: var(--accent-light); border-color: var(--accent); }
+
+  .timeline-meta { font-size: 12px; color: var(--text-tertiary); margin-bottom: 4px; }
+  .timeline-type { font-weight: 500; color: var(--text-secondary); }
+  .timeline-content { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+  .timeline-next { font-size: 12px; color: var(--text-tertiary); margin-top: 4px; font-style: italic; }
+</style>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-brand">基金销售管理</div>
+    <ul class="sidebar-nav">
+      <li><a href="dashboard.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>数据概览</a></li>
+      <li><a href="funds-list.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M4 12h16M4 17h10"/></svg>产品货架</a></li>
+      <li><a href="#" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>客户管理</a></li>
+    </ul>
+  </aside>
+
+  <main class="main">
+    <!-- Drawer overlay -->
+    <div class="drawer-overlay"></div>
+
+    <!-- Client Detail Drawer -->
+    <div class="drawer">
+      <button class="drawer-close">✕</button>
+
+      <h2 class="drawer-title">张伟</h2>
+      <div class="drawer-badges">
+        <span class="badge badge-diamond">钻石</span>
+        <span class="tag">渠道推荐</span>
+      </div>
+
+      <!-- Basic info -->
+      <div class="info-section">
+        <div class="info-section-title">基本信息</div>
+        <div class="info-grid">
+          <div>
+            <div class="info-item-label">公司</div>
+            <div class="info-item-value">华盛私募投资基金</div>
+          </div>
+          <div>
+            <div class="info-item-label">职位</div>
+            <div class="info-item-value">总经理</div>
+          </div>
+          <div>
+            <div class="info-item-label">电话</div>
+            <div class="info-item-value">138****1001</div>
+          </div>
+          <div>
+            <div class="info-item-label">在管资产</div>
+            <div class="info-item-value">5,000.00 万</div>
+          </div>
+          <div>
+            <div class="info-item-label">建档日期</div>
+            <div class="info-item-value">2023-02-10</div>
+          </div>
+          <div>
+            <div class="info-item-label">负责业务员</div>
+            <div class="info-item-value">张晓华</div>
+          </div>
+        </div>
+        <div class="tags" style="margin-top: 12px;">
+          <span class="tag">高净值</span>
+          <span class="tag">机构</span>
+          <span class="tag">长期持有</span>
+        </div>
+      </div>
+
+      <!-- Holdings -->
+      <div class="info-section">
+        <div class="info-section-title">持仓</div>
+        <table class="mini-table">
+          <thead>
+            <tr>
+              <th>产品</th>
+              <th>类型</th>
+              <th>金额</th>
+              <th>收益率</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="fund-link">华夏稳健增长混合型基金</span></td>
+              <td>混合型</td>
+              <td>300.00 万</td>
+              <td><span class="return-positive">+37.25%</span></td>
+            </tr>
+            <tr>
+              <td><span class="fund-link">南方价值精选股票型基金</span></td>
+              <td>股票型</td>
+              <td>500.00 万</td>
+              <td><span class="return-positive">+38.21%</span></td>
+            </tr>
+            <tr>
+              <td><span class="fund-link">易方达纯债增强债券型基金</span></td>
+              <td>债券型</td>
+              <td>200.00 万</td>
+              <td><span class="return-positive">+4.12%</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Follow-ups -->
+      <div class="info-section">
+        <div class="followup-header">
+          <div class="info-section-title" style="margin-bottom: 0; padding-bottom: 0; border-bottom: none;">跟进记录</div>
+          <button class="btn-primary">+ 新增跟进</button>
+        </div>
+        <ul class="timeline">
+          <li class="timeline-item">
+            <div class="timeline-meta">2025-03-05 11:00 · <span class="timeline-type">电话</span></div>
+            <div class="timeline-content">跟进新产品认购意向，客户表示暂时观望，等待市场时机，计划Q2再考虑加仓。</div>
+            <div class="timeline-next">下一步: 4月初再次跟进市场情况</div>
+          </li>
+          <li class="timeline-item">
+            <div class="timeline-meta">2025-02-22 09:15 · <span class="timeline-type">微信</span></div>
+            <div class="timeline-content">微信发送了富国新兴消费基金的详细资料，客户回复已收到，正在研究中。</div>
+            <div class="timeline-next">下一步: 一周后电话跟进确认意向</div>
+          </li>
+          <li class="timeline-item">
+            <div class="timeline-meta">2025-02-15 14:00 · <span class="timeline-type">电话</span></div>
+            <div class="timeline-content">电话沟通新募集产品"富国新兴消费混合型基金"，客户表示有兴趣，需要详细资料后再决定。</div>
+            <div class="timeline-next">下一步: 发送产品说明书及历史业绩对比</div>
+          </li>
+          <li class="timeline-item">
+            <div class="timeline-meta">2025-01-10 10:30 · <span class="timeline-type">面谈</span></div>
+            <div class="timeline-content">在客户公司会议室进行季度回顾，详细汇报华夏稳健增长基金近期表现，客户对年化收益满意。</div>
+            <div class="timeline-next">下一步: 下季度前发送产品净值报告</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Background: client list (partially visible) -->
+    <div class="page-header">
+      <h1>客户管理</h1>
+    </div>
+    <div class="toolbar">
+      <input type="text" class="search-input" placeholder="搜索客户姓名或公司...">
+      <select class="filter-select">
+        <option>全部等级</option>
+        <option>钻石</option>
+        <option>金</option>
+        <option>银</option>
+        <option>铜</option>
+        <option>潜客</option>
+      </select>
+    </div>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>姓名</th>
+          <th>公司</th>
+          <th>职位</th>
+          <th>等级</th>
+          <th>在管资产</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="col-name">张伟</td>
+          <td>华盛私募投资基金</td>
+          <td>总经理</td>
+          <td><span class="badge badge-diamond">钻石</span></td>
+          <td>5,000.00 万</td>
+          <td><a class="action-link">查看</a></td>
+        </tr>
+        <tr>
+          <td class="col-name">李秀英</td>
+          <td>远景家族办公室</td>
+          <td>CIO</td>
+          <td><span class="badge badge-diamond">钻石</span></td>
+          <td>8,000.00 万</td>
+          <td><a class="action-link">查看</a></td>
+        </tr>
+        <tr>
+          <td class="col-name">王强</td>
+          <td>鼎盛资产管理</td>
+          <td>CFO</td>
+          <td><span class="badge badge-gold">金</span></td>
+          <td>2,000.00 万</td>
+          <td><a class="action-link">查看</a></td>
+        </tr>
+        <tr>
+          <td class="col-name">赵丽</td>
+          <td>明德投资顾问</td>
+          <td>投资总监</td>
+          <td><span class="badge badge-gold">金</span></td>
+          <td>1,500.00 万</td>
+          <td><a class="action-link">查看</a></td>
+        </tr>
+        <tr>
+          <td class="col-name">陈建国</td>
+          <td>恒通实业集团</td>
+          <td>董事长</td>
+          <td><span class="badge badge-gold">金</span></td>
+          <td>3,000.00 万</td>
+          <td><a class="action-link">查看</a></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="pagination">
+      <span>共 10 条，第 1/1 页</span>
+      <div class="pagination-controls"><button class="pagination-btn active">1</button></div>
+    </div>
+  </main>
+</div>
+</body>
+</html>
