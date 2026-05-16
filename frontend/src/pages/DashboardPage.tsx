@@ -111,15 +111,16 @@ export default function DashboardPage() {
                 innerRadius={0.5}
                 color={PIE_COLORS}
                 label={{
-                  type: 'spider',
-                  content: '{name}: {percentage}',
+                  text: (d: { type: string; percentage: number }) =>
+                    `${d.type}: ${(d.percentage * 100).toFixed(1)}%`,
+                  position: 'outside',
+                  connector: true,
+                  style: { fontSize: 12 },
                 }}
-                tooltip={{
-                  formatter: (datum: { type: string; value: number; percentage: number }) => ({
-                    name: datum.type,
-                    value: formatAmount(datum.value),
-                  }),
-                }}
+                tooltip={(d: { type: string; value: number }) => ({
+                  name: d.type,
+                  value: formatAmount(d.value),
+                })}
                 legend={{ position: 'bottom' }}
                 height={280}
               />
@@ -141,16 +142,12 @@ export default function DashboardPage() {
                 data={lineData}
                 xField="month"
                 yField="count"
-                seriesField="category"
-                smooth
+                colorField="category"
+                shapeField="smooth"
                 height={280}
                 legend={{ position: 'bottom' }}
                 tooltip={{ shared: true }}
-                lineStyle={({ category }: { category: string }) =>
-                  category === '总计'
-                    ? { lineWidth: 2 }
-                    : { lineWidth: 1.5, lineDash: [4, 3] }
-                }
+                style={{ lineWidth: 2 }}
               />
             )}
           </Card>

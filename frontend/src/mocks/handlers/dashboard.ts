@@ -63,7 +63,8 @@ export const dashboardHandlers = [
   http.get('/api/dashboard/followup-trend', () => {
     // 生成近 6 个月的月份列表
     const months: string[] = []
-    const now = new Date()
+    // 使用固定参考日期，与 mock 数据对齐（mock 数据最晚记录为 2025-03-05）
+    const now = new Date('2025-03-15')
     for (let i = 5; i >= 0; i--) {
       const d = new Date(now.getFullYear(), now.getMonth() - i, 1)
       const month = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`
