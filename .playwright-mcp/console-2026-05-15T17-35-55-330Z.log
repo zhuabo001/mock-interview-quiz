@@ -1,0 +1,55 @@
+[     353ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:5173/node_modules/.vite/deps/client-CRGSV5G_.js?v=22d946fd:14337
+[     529ms] [LOG] %cDocumentation: %chttps://mswjs.io/docs font-weight:bold font-weight:normal @ http://localhost:5173/node_modules/.vite/deps/msw_browser.js?v=22d946fd:3307
+[     530ms] [LOG] Found an issue? https://github.com/mswjs/msw/issues @ http://localhost:5173/node_modules/.vite/deps/msw_browser.js?v=22d946fd:3308
+[     530ms] [LOG] Worker script URL: http://localhost:5173/mockServiceWorker.js @ http://localhost:5173/node_modules/.vite/deps/msw_browser.js?v=22d946fd:3309
+[     530ms] [LOG] Worker scope: http://localhost:5173/ @ http://localhost:5173/node_modules/.vite/deps/msw_browser.js?v=22d946fd:3310
+[     530ms] [LOG] Client ID: %s (%s) fea1f124-2ed2-4d2b-be06-91fa6b762a5f top-level @ http://localhost:5173/node_modules/.vite/deps/msw_browser.js?v=22d946fd:3311
+[     880ms] [LOG] Request {url: URL, method: GET, headers: Object, body: } @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=22d946fd:416
+[     880ms] [LOG] Handler: HttpHandler @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=22d946fd:417
+[     880ms] [LOG] Response {status: 200, statusText: OK, headers: Object, body: {"code":0,"message":"success","data":{"totalFunds"…eFunds":9,"totalClients":10,"totalAum":52000000}}} @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=22d946fd:418
+[     881ms] [LOG] Request {url: URL, method: GET, headers: Object, body: } @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=22d946fd:416
+[     881ms] [LOG] Handler: HttpHandler @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=22d946fd:417
+[     881ms] [LOG] Response {status: 200, statusText: OK, headers: Object, body: {"code":0,"message":"success","data":[{"type":"货币型…cale":2850000000,"count":1,"percentage":0.0643}]}} @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=22d946fd:418
+[     882ms] [LOG] Request {url: URL, method: GET, headers: Object, body: } @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=22d946fd:416
+[     882ms] [LOG] Handler: HttpHandler @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=22d946fd:417
+[     882ms] [LOG] Response {status: 200, statusText: OK, headers: Object, body: {"code":0,"message":"success","data":[{"month":"20…ount":0,"byType":{"电话":0,"面谈":0,"微信":0,"邮件":0}}]}} @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=22d946fd:418
+[   41361ms] [ERROR] Warning: [antd: Drawer] `width` is deprecated. Please use `size` instead. @ http://localhost:5173/@vite/client:509
+[   41418ms] [LOG] Request {url: URL, method: GET, headers: Object, body: } @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=22d946fd:416
+[   41418ms] [LOG] Handler: HttpHandler @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=22d946fd:417
+[   41418ms] [LOG] Response {status: 200, statusText: OK, headers: Object, body: {"code":0,"message":"success","data":{"list":[{"id…age":1,"pageSize":10,"total":10,"totalPages":1}}}} @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=22d946fd:418
+[   43336ms] [LOG] Request {url: URL, method: GET, headers: Object, body: } @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=22d946fd:416
+[   43336ms] [LOG] Handler: HttpHandler @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=22d946fd:417
+[   43336ms] [LOG] Response {status: 200, statusText: OK, headers: Object, body: {"code":0,"message":"success","data":{"list":[{"id…age":1,"pageSize":10,"total":10,"totalPages":1}}}} @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=22d946fd:418
+[   46387ms] [LOG] Request {url: URL, method: GET, headers: Object, body: } @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=22d946fd:416
+[   46387ms] [LOG] Handler: HttpHandler @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=22d946fd:417
+[   46388ms] [LOG] Response {status: 200, statusText: OK, headers: Object, body: {"code":0,"message":"success","data":{"list":[{"id…page":1,"pageSize":10,"total":3,"totalPages":1}}}} @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=22d946fd:418
+[   48694ms] [LOG] Request {url: URL, method: GET, headers: Object, body: } @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=22d946fd:416
+[   48694ms] [LOG] Handler: HttpHandler @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=22d946fd:417
+[   48694ms] [LOG] Response {status: 200, statusText: OK, headers: Object, body: {"code":0,"message":"success","data":{"list":[{"id…page":1,"pageSize":10,"total":2,"totalPages":1}}}} @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=22d946fd:418
+[   56586ms] [LOG] Request {url: URL, method: GET, headers: Object, body: } @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=22d946fd:416
+[   56587ms] [LOG] Handler: HttpHandler @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=22d946fd:417
+[   56587ms] [LOG] Response {status: 200, statusText: OK, headers: Object, body: {"code":0,"message":"success","data":{"list":[{"id…page":1,"pageSize":10,"total":1,"totalPages":1}}}} @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=22d946fd:418
+[   62764ms] [LOG] Request {url: URL, method: GET, headers: Object, body: } @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=22d946fd:416
+[   62764ms] [LOG] Handler: HttpHandler @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=22d946fd:417
+[   62764ms] [LOG] Response {status: 200, statusText: OK, headers: Object, body: {"code":0,"message":"success","data":{"client":{"i…ne":"13812340003","email":"wang.fang@fund.com"}}}} @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=22d946fd:418
+[   62764ms] [LOG] Request {url: URL, method: GET, headers: Object, body: } @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=22d946fd:416
+[   62764ms] [LOG] Handler: HttpHandler @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=22d946fd:417
+[   62764ms] [LOG] Response {status: 200, statusText: OK, headers: Object, body: {"code":0,"message":"success","data":{"list":[{"id…page":1,"pageSize":10,"total":3,"totalPages":1}}}} @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=22d946fd:418
+[   62768ms] [ERROR] Warning: [antd: Descriptions] `labelStyle` is deprecated. Please use `styles.label` instead. @ http://localhost:5173/@vite/client:509
+[   62768ms] [ERROR] Warning: [antd: Descriptions] `contentStyle` is deprecated. Please use `styles.content` instead. @ http://localhost:5173/@vite/client:509
+[   62777ms] [ERROR] Warning: [antd: Timeline] `items.children` is deprecated. Please use `items.content` instead. @ http://localhost:5173/@vite/client:509
+[  954714ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:5173/node_modules/.vite/deps/client-CRGSV5G_.js?v=22d946fd:14337
+[  954887ms] [LOG] %cDocumentation: %chttps://mswjs.io/docs font-weight:bold font-weight:normal @ http://localhost:5173/node_modules/.vite/deps/msw_browser.js?v=22d946fd:3307
+[  954887ms] [LOG] Found an issue? https://github.com/mswjs/msw/issues @ http://localhost:5173/node_modules/.vite/deps/msw_browser.js?v=22d946fd:3308
+[  954887ms] [LOG] Worker script URL: http://localhost:5173/mockServiceWorker.js @ http://localhost:5173/node_modules/.vite/deps/msw_browser.js?v=22d946fd:3309
+[  954887ms] [LOG] Worker scope: http://localhost:5173/ @ http://localhost:5173/node_modules/.vite/deps/msw_browser.js?v=22d946fd:3310
+[  954887ms] [LOG] Client ID: %s (%s) c97467aa-75a1-4bb3-83ec-d1fe24745cb6 top-level @ http://localhost:5173/node_modules/.vite/deps/msw_browser.js?v=22d946fd:3311
+[  954991ms] [LOG] Request {url: URL, method: GET, headers: Object, body: } @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=22d946fd:416
+[  954992ms] [LOG] Handler: HttpHandler @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=22d946fd:417
+[  954992ms] [LOG] Response {status: 200, statusText: OK, headers: Object, body: {"code":0,"message":"success","data":{"totalFunds"…eFunds":9,"totalClients":10,"totalAum":52000000}}} @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=22d946fd:418
+[  954993ms] [LOG] Request {url: URL, method: GET, headers: Object, body: } @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=22d946fd:416
+[  954993ms] [LOG] Handler: HttpHandler @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=22d946fd:417
+[  954993ms] [LOG] Response {status: 200, statusText: OK, headers: Object, body: {"code":0,"message":"success","data":[{"type":"货币型…cale":2850000000,"count":1,"percentage":0.0643}]}} @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=22d946fd:418
+[  954993ms] [LOG] Request {url: URL, method: GET, headers: Object, body: } @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=22d946fd:416
+[  954993ms] [LOG] Handler: HttpHandler @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=22d946fd:417
+[  954993ms] [LOG] Response {status: 200, statusText: OK, headers: Object, body: {"code":0,"message":"success","data":[{"month":"20…ount":0,"byType":{"电话":0,"面谈":0,"微信":0,"邮件":0}}]}} @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=22d946fd:418

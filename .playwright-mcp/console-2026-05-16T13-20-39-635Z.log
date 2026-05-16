@@ -1,0 +1,15 @@
+[     116ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:5173/node_modules/.vite/deps/client-CRGSV5G_.js?v=22d946fd:14337
+[     199ms] [LOG] %cDocumentation: %chttps://mswjs.io/docs font-weight:bold font-weight:normal @ http://localhost:5173/node_modules/.vite/deps/msw_browser.js?v=22d946fd:3307
+[     199ms] [LOG] Found an issue? https://github.com/mswjs/msw/issues @ http://localhost:5173/node_modules/.vite/deps/msw_browser.js?v=22d946fd:3308
+[     199ms] [LOG] Worker script URL: http://localhost:5173/mockServiceWorker.js @ http://localhost:5173/node_modules/.vite/deps/msw_browser.js?v=22d946fd:3309
+[     199ms] [LOG] Worker scope: http://localhost:5173/ @ http://localhost:5173/node_modules/.vite/deps/msw_browser.js?v=22d946fd:3310
+[     199ms] [LOG] Client ID: %s (%s) 99b24923-b773-477d-8002-bdbd953e1933 top-level @ http://localhost:5173/node_modules/.vite/deps/msw_browser.js?v=22d946fd:3311
+[     311ms] [LOG] Request {url: URL, method: GET, headers: Object, body: } @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=22d946fd:416
+[     311ms] [LOG] Handler: HttpHandler @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=22d946fd:417
+[     311ms] [LOG] Response {status: 200, statusText: OK, headers: Object, body: {"code":0,"message":"success","data":{"totalFunds"…eFunds":9,"totalClients":10,"totalAum":52000000}}} @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=22d946fd:418
+[     311ms] [LOG] Request {url: URL, method: GET, headers: Object, body: } @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=22d946fd:416
+[     311ms] [LOG] Handler: HttpHandler @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=22d946fd:417
+[     311ms] [LOG] Response {status: 200, statusText: OK, headers: Object, body: {"code":0,"message":"success","data":[{"type":"货币型…cale":2850000000,"count":1,"percentage":0.0643}]}} @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=22d946fd:418
+[     311ms] [LOG] Request {url: URL, method: GET, headers: Object, body: } @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=22d946fd:416
+[     311ms] [LOG] Handler: HttpHandler @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=22d946fd:417
+[     311ms] [LOG] Response {status: 200, statusText: OK, headers: Object, body: {"code":0,"message":"success","data":[{"month":"20…ount":1,"byType":{"电话":1,"面谈":0,"微信":0,"邮件":0}}]}} @ http://localhost:5173/node_modules/.vite/deps/msw.js?v=22d946fd:418

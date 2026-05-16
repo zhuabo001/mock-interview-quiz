@@ -1,0 +1,26 @@
+- generic [ref=e3]:
+  - complementary [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e6]: 基金销售管理
+      - menu [ref=e7]:
+        - menuitem "数据概览" [ref=e8] [cursor=pointer]:
+          - img [ref=e9]
+          - generic [ref=e14]: 数据概览
+        - menuitem "产品货架" [ref=e15] [cursor=pointer]:
+          - img [ref=e16]
+          - generic [ref=e18]: 产品货架
+        - menuitem "客户管理" [ref=e19] [cursor=pointer]:
+          - img [ref=e20]
+          - generic [ref=e23]: 客户管理
+  - main [ref=e25]:
+    - generic [ref=e26]:
+      - generic [ref=e27]:
+        - heading "数据概览" [level=1] [ref=e28]
+        - paragraph [ref=e29]: 业务全貌一览
+      - generic [ref=e38]:
+        - generic [ref=e42]:
+          - generic [ref=e43]: 在售产品规模占比
+          - generic [ref=e44]: 按产品类型分组，仅统计运作中产品
+        - generic [ref=e57]:
+          - generic [ref=e58]: 跟进趋势
+          - generic [ref=e59]: 近 6 个月跟进次数，按方式细分
