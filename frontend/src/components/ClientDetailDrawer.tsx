@@ -102,9 +102,7 @@ export default function ClientDetailDrawer() {
       <Drawer
         open={clientDrawerOpen}
         onClose={closeClientDrawer}
-        width={560}
-        title={null}
-        styles={{ body: { padding: 32 } }}
+        styles={{ body: { padding: 32 }, wrapper: { width: 560 } }}
         closeIcon={null}
       >
         {isLoading ? (
@@ -127,7 +125,7 @@ export default function ClientDetailDrawer() {
             {/* 基本信息 */}
             <div style={{ marginBottom: 28 }}>
               {sectionTitle('基本信息')}
-              <Descriptions column={2} size="small" labelStyle={{ color: 'oklch(0.6 0.005 80)', fontSize: 12 }} contentStyle={{ fontWeight: 500, fontSize: 14 }}>
+              <Descriptions column={2} size="small" styles={{ label: { color: 'oklch(0.6 0.005 80)', fontSize: 12 }, content: { fontWeight: 500, fontSize: 14 } }}>
                 <Descriptions.Item label="公司">{client.company}</Descriptions.Item>
                 <Descriptions.Item label="职位">{client.position}</Descriptions.Item>
                 <Descriptions.Item label="电话">{client.phone}</Descriptions.Item>
@@ -175,7 +173,7 @@ export default function ClientDetailDrawer() {
                 <Timeline
                   items={followups.map((fu: FollowUp, idx: number) => ({
                     color: idx === 0 ? 'blue' : 'gray',
-                    children: (
+                    content: (
                       <div>
                         <div style={{ fontSize: 12, color: 'oklch(0.6 0.005 80)', marginBottom: 4 }}>
                           {fu.createdAt.slice(0, 16)} · <span style={{ fontWeight: 500, color: 'oklch(0.45 0.006 80)' }}>{fu.type}</span>

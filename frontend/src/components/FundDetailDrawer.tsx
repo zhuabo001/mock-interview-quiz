@@ -64,9 +64,7 @@ export default function FundDetailDrawer() {
     <Drawer
       open={fundDrawerOpen}
       onClose={closeFundDrawer}
-      width={520}
-      title={null}
-      styles={{ body: { padding: 32 } }}
+      styles={{ body: { padding: 32 }, wrapper: { width: 520 } }}
       closeIcon={null}
     >
       {isLoading ? (
@@ -91,7 +89,7 @@ export default function FundDetailDrawer() {
             <div style={{ fontSize: 12, fontWeight: 500, color: 'oklch(0.6 0.005 80)', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: 12, paddingBottom: 8, borderBottom: '1px solid oklch(0.9 0.005 80)' }}>
               基本信息
             </div>
-            <Descriptions column={2} size="small" labelStyle={{ color: 'oklch(0.6 0.005 80)', fontSize: 12 }} contentStyle={{ fontWeight: 500, fontSize: 14 }}>
+            <Descriptions column={2} size="small" styles={{ label: { color: 'oklch(0.6 0.005 80)', fontSize: 12 }, content: { fontWeight: 500, fontSize: 14 } }}>
               <Descriptions.Item label="产品类型">{fund.type}</Descriptions.Item>
               <Descriptions.Item label="基金经理">{fund.fundManager}</Descriptions.Item>
               <Descriptions.Item label="成立日期">{formatDate(fund.establishDate)}</Descriptions.Item>
